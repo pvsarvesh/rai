@@ -72,5 +72,8 @@ def main():
         print(f"Error launching dashboards: {e}")
         sys.exit(1)
 
+    # Keep the script running so dashboards remain accessible
+    input("Dashboards are running. Press Enter to stop and close the dashboards...")
+
 if __name__ == "__main__":
     main()
