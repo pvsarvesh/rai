@@ -9,7 +9,7 @@ import numpy as np
 from db_connector import get_db_engine, fetch_table_data
 from preprocessing import preprocess_data
 from model_handler import load_model, predict
-from rai_dashboard import launch_rai_dashboard
+from rai_dashboard import launch_rai_dashboard, launch_fairness_dashboard
 from config import TABLE_NAME, TRAINED_FEATURES
 
 def setup_logging():
@@ -66,11 +66,24 @@ def main():
 
         # Launch RAI dashboard using the temp file
         launch_rai_dashboard(model, temp_csv_path)
+        
+        sens_df = df.copy()
+        sens_df["predicted_future_collision"] = predictions
+
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".csv", mode="w", newline="", encoding="utf-8") as tmp_file:
+            sens_csv_path = tmp_file.name
+            sens_df.to_csv(sens_csv_path, index=False)
+            logging.info(f"Temporary sensitive file saved at: {sens_csv_path}")
+        
+        # Launch Fairness dashboard
+        launch_fairness_dashboard(model, sens_csv_path)
 
         # Delete temp file after dashboard closes
         try:
             os.remove(temp_csv_path)
             logging.info("Temporary file deleted.")
+            os.remove(sens_csv_path)
+            logging.info("Temporary sensitive file deleted.")
         except Exception as e:
             logging.warning(f"Could not delete temp file: {e}")
 
