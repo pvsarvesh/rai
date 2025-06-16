@@ -14,7 +14,7 @@ TABLE_NAME = 'gpstab_driver_scores'
 
 # Columns to drop during preprocessing
 DROP_COLS = [
-    'whitelabel', 'DriverID', 'date', 'future_collision', 'collision',
+    'DriverID', 'date', 'future_collision', 'collision',
     'low_acceleration', 'low_braking',
     'low_acceleration_while_cornering', 'low_braking_while_cornering',
     'average_speed'
