@@ -8,7 +8,7 @@ import pandas as pd
 import numpy as np
 from db_connector import get_db_engine, fetch_table_data
 from preprocessing import preprocess_data
-from model_handler import load_model, predict
+from model_handler import load_model
 from rai_dashboard import launch_rai_dashboard, launch_fairness_dashboard
 from config import TABLE_NAME, TRAINED_FEATURES
 
