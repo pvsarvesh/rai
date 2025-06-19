@@ -68,6 +68,9 @@ def launch_rai_dashboard(model, csv_path):
         ])
         rai_insights.counterfactual.add(total_CFs=10, desired_class="opposite")
 
+        # Add error analysis module
+        rai_insights.error_analysis.add()
+
         # Compute RAI modules
         rai_insights.compute()
         logging.info("RAIInsights computed.")
