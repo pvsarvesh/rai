@@ -18,10 +18,9 @@ def launch_rai_dashboard(model, csv_path):
     try:
         # Load data from CSV
         df = pd.read_csv(csv_path)
-
-        # Ensure target column is 1D
+                # Ensure target column is 1D
         target_col = "predicted_future_collision"
-        df[target_col] = np.ravel(df[target_col].values)
+        df[target_col] = df[target_col].to_numpy().ravel()
 
         # Limit to top 1000 for performance
         df = df.head(1000)
@@ -38,7 +37,7 @@ def launch_rai_dashboard(model, csv_path):
                 test=df,
                 target_column=target_col,
                 task_type='classification',
-                y_test=np.ravel(y_true.values)
+                y_test=y_true.to_numpy().ravel()
             )
         except TypeError:
             rai_insights = RAIInsights(
@@ -95,7 +94,7 @@ def launch_fairness_dashboard(model, csv_path):
 
         # Ensure target column is 1D
         target_col = "predicted_future_collision"
-        df[target_col] = np.ravel(df[target_col].values)
+        df[target_col] = df[target_col].to_numpy().ravel()
 
         # Limit to top 1000 for performance
         df = df.head(1000)
